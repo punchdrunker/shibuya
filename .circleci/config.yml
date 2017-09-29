@@ -69,9 +69,5 @@ jobs:
     build_test_deploy:
       jobs:
         - dependencies
-        - test:
-            requires:
-              - dependencies
-        - build:
-            requires:
-              - dependencies
+        - test
+        - build
