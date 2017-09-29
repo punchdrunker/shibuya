@@ -66,7 +66,7 @@ jobs:
           destination: apk
   workflows:
     version: 2
-    build-test-and-deploy:
+    build_test_deploy:
       jobs:
         - dependencies
         - test:
