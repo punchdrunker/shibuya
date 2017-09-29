@@ -69,5 +69,9 @@ workflows:
   build_test_deploy:
     jobs:
       - dependencies
-      - test
-      - build
+      - test:
+          requires:
+            - dependencies
+      - build:
+          requires:
+            - dependencies
