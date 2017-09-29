@@ -11,13 +11,6 @@ jobs:
       - checkout
       - restore_cache:
           key: sdks-licenses-build-tools-extras-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
-      - run:
-          name: Download Dependencies
-          command: ./gradlew dependencies app:prefetchCustomDependencies
-      - save_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}-{{ checksum "app/dependencies.lock" }}
-          paths:
-            - ~/.gradle
       - save_cache:
           key: sdks-licenses-build-tools-extras-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
           paths:
