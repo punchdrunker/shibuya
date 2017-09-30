@@ -3,6 +3,7 @@ package tokyo.punchdrunker.shibuya
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.experimental.launch
 import retrofit2.Call
@@ -59,23 +60,22 @@ class MainActivity : AppCompatActivity() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
-        val service = retrofit.create<ConnpassService>(ConnpassService::class.java!!)
+        val service = retrofit.create<ConnpassService>(ConnpassService::class.java)
 
         service.listEvents(1256).enqueue(object : Callback<ListEventsResponse> {
             override fun onResponse(call: Call<ListEventsResponse>?, response: Response<ListEventsResponse>?) {
                 if (response != null && response.isSuccessful) {
-                    // success
                     val body = response.body()
                     body?.events?.forEach { event ->
                         Timber.d(event.title)
                     }
                 } else {
-                    // failure
+                    Toast.makeText(this@MainActivity, "parse error", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<ListEventsResponse>?, t: Throwable?) {
-                // failure
+                Toast.makeText(this@MainActivity, "error", Toast.LENGTH_SHORT).show()
             }
         })
     }
