@@ -32,7 +32,7 @@ kapt {
 
 dependencies {
     kapt 'com.android.databinding:compiler:3.0.0-beta6'
-    kapt 'com.airbnb.android:epoxy-processor:2.5.0'
+    kapt 'com.airbnb.android:epoxy-processor:2.4.0'
 
     // fundamentals
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -43,7 +43,7 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     // network
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -56,8 +56,10 @@ dependencies {
     implementation 'ru.gildor.coroutines:kotlin-coroutines-retrofit:0.7.1'
 
     // view
-    implementation 'com.airbnb.android:epoxy:2.5.0'
-    implementation 'com.airbnb.android:epoxy-databinding:2.5.0'
+    // TODO: update epoxy when 2.5.1 or later is released
+    // https://github.com/airbnb/epoxy/issues/290
+    implementation 'com.airbnb.android:epoxy:2.4.0'
+    implementation 'com.airbnb.android:epoxy-databinding:2.4.0'
 
     // debug tools
     implementation 'com.jakewharton.timber:timber:4.5.1'

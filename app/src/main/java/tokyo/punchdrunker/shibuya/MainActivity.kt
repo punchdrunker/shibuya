@@ -8,7 +8,7 @@ import kotlinx.coroutines.experimental.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.gildor.coroutines.retrofit.await
-import timber.log.Timber
+import tokyo.punchdrunker.shibuya.entity.ConnpassEvent
 import tokyo.punchdrunker.shibuya.service.ConnpassService
 
 
@@ -19,18 +19,18 @@ class MainActivity : AppCompatActivity() {
             .build()
             .create<ConnpassService>(ConnpassService::class.java)
 
+    val listController = ListEventController()
+    var eventList = arrayListOf<ConnpassEvent>()
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                message.setText(R.string.title_home)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                message.setText(R.string.title_dashboard)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                message.setText(R.string.title_notifications)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        list_event_recycler_view.adapter = listController.adapter
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
@@ -54,7 +55,12 @@ class MainActivity : AppCompatActivity() {
     suspend fun getEvents() {
         val response = connpassService.listEvents(1256).await()
         response.events.forEach { event ->
-            Timber.d(event.title)
+            eventList.add(event)
         }
+        updateData()
+    }
+
+    fun updateData() {
+        listController.setData(eventList)
     }
 }
