@@ -9,15 +9,20 @@ import kotlinx.coroutines.experimental.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import tokyo.punchdrunker.shibuya.service.ConnpassService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.gildor.coroutines.retrofit.await
 import timber.log.Timber
-import timber.log.Timber.DebugTree
 import tokyo.punchdrunker.shibuya.response.ListEventsResponse
+import tokyo.punchdrunker.shibuya.service.ConnpassService
 
 
 class MainActivity : AppCompatActivity() {
+    val connpassService = Retrofit.Builder()
+            .baseUrl("https://connpass.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create<ConnpassService>(ConnpassService::class.java)
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -41,10 +46,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(DebugTree())
-        }
-
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
@@ -54,15 +55,17 @@ class MainActivity : AppCompatActivity() {
         launch { getEvents() }
     }
 
+    // using kotlin-coroutines-retrofit
     suspend fun getEvents() {
-        val retrofit = Retrofit.Builder()
-                .baseUrl("https://connpass.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+        val response = connpassService.listEvents(1256).await()
+        response.events.forEach { event ->
+            Timber.d(event.title)
+        }
+    }
 
-        val service = retrofit.create<ConnpassService>(ConnpassService::class.java)
-
-        service.listEvents(1256).enqueue(object : Callback<ListEventsResponse> {
+    // pure retrofit way
+    suspend fun getEventsWithEnqueue() {
+        connpassService.listEvents(1256).enqueue(object : Callback<ListEventsResponse> {
             override fun onResponse(call: Call<ListEventsResponse>?, response: Response<ListEventsResponse>?) {
                 if (response != null && response.isSuccessful) {
                     val body = response.body()

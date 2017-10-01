@@ -38,6 +38,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19'
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19"
+    compile 'ru.gildor.coroutines:kotlin-coroutines-retrofit:0.7.1'
 
     // debug tools
     compile 'com.jakewharton.timber:timber:4.5.1'
