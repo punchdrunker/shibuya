@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -21,9 +21,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {
+    kapt 'com.android.databinding:compiler:3.0.0-beta6'
+    kapt 'com.airbnb.android:epoxy-processor:2.5.0'
+
+    // fundamentals
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
@@ -34,17 +45,24 @@ dependencies {
     })
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19'
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19"
-    compile 'ru.gildor.coroutines:kotlin-coroutines-retrofit:0.7.1'
+    // network
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+
+    // async
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19"
+    implementation 'ru.gildor.coroutines:kotlin-coroutines-retrofit:0.7.1'
+
+    // view
+    implementation 'com.airbnb.android:epoxy:2.5.0'
+    implementation 'com.airbnb.android:epoxy-databinding:2.5.0'
 
     // debug tools
-    compile 'com.jakewharton.timber:timber:4.5.1'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    implementation 'com.jakewharton.timber:timber:4.5.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
 kotlin {
     experimental {

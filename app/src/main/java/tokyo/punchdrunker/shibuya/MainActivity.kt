@@ -3,17 +3,12 @@ package tokyo.punchdrunker.shibuya
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.experimental.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.gildor.coroutines.retrofit.await
 import timber.log.Timber
-import tokyo.punchdrunker.shibuya.response.ListEventsResponse
 import tokyo.punchdrunker.shibuya.service.ConnpassService
 
 
@@ -61,25 +56,5 @@ class MainActivity : AppCompatActivity() {
         response.events.forEach { event ->
             Timber.d(event.title)
         }
-    }
-
-    // pure retrofit way
-    suspend fun getEventsWithEnqueue() {
-        connpassService.listEvents(1256).enqueue(object : Callback<ListEventsResponse> {
-            override fun onResponse(call: Call<ListEventsResponse>?, response: Response<ListEventsResponse>?) {
-                if (response != null && response.isSuccessful) {
-                    val body = response.body()
-                    body?.events?.forEach { event ->
-                        Timber.d(event.title)
-                    }
-                } else {
-                    Toast.makeText(this@MainActivity, "parse error", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<ListEventsResponse>?, t: Throwable?) {
-                Toast.makeText(this@MainActivity, "error", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 }
