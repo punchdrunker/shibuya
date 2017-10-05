@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,14 +14,14 @@ import tokyo.punchdrunker.shibuya.service.ConnpassService
 
 
 class MainActivity : AppCompatActivity() {
-    val connpassService = Retrofit.Builder()
+    private val connpassService = Retrofit.Builder()
             .baseUrl("https://connpass.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create<ConnpassService>(ConnpassService::class.java)
 
-    val listController = ListEventController()
-    var eventList = arrayListOf<ConnpassEvent>()
+    private val listController = ListEventController()
+    private var eventList = arrayListOf<ConnpassEvent>()
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -48,11 +49,10 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        launch { getEvents() }
+        launch(UI) { getEvents() }
     }
 
-    // using kotlin-coroutines-retrofit
-    suspend fun getEvents() {
+    suspend private fun getEvents() {
         val response = connpassService.listEvents(1256).await()
         response.events.forEach { event ->
             eventList.add(event)
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         updateData()
     }
 
-    fun updateData() {
+    private fun updateData() {
         listController.setData(eventList)
     }
 }

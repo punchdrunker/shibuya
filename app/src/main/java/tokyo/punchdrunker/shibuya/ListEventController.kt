@@ -12,9 +12,9 @@ class ListEventController : TypedEpoxyController<List<ConnpassEvent>>() {
 
         events.forEach {
             FeedEventBindingModel_()
-                    .id(it.eventId)
+                    .id(it.event_id)
                     .event(it)
-                    //.addTo(this)
+                    .addTo(this)
         }
     }
 }
