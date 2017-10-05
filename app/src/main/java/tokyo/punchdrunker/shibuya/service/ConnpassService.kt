@@ -10,7 +10,8 @@ import tokyo.punchdrunker.shibuya.response.ListEventsResponse
  */
 interface ConnpassService {
     @GET(PATH + "/event")
-    fun listEvents(@Query("series_id") seriesId: Int): Call<ListEventsResponse>
+    fun listEvents(@Query("series_id") seriesId: Int, @Query("count") count: Int): Call<ListEventsResponse>
+
     companion object {
         private const val PATH = "/api/v1"
     }
