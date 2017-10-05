@@ -24,11 +24,10 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="@{event.title}"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginBottom="8dp"
-
             tools:text="Title" />
 
         <TextView
@@ -42,6 +41,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:background="#666"/>
+            android:background="#666" />
     </LinearLayout>
 </layout>
