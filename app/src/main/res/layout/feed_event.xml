@@ -14,9 +14,10 @@
     </data>
 
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="8dp">
 
         <TextView
@@ -24,22 +25,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{event.title}"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Song" />
+            android:layout_marginBottom="8dp"
+
+            tools:text="Title" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{event.description}"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            tools:text="Song" />
+            android:text="@{event.descriptionForFeed}"
+            android:textSize="12sp"
+            tools:text="description" />
 
-    </android.support.constraint.ConstraintLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#666"/>
+    </LinearLayout>
 </layout>

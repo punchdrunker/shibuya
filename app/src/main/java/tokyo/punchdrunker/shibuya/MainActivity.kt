@@ -53,7 +53,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     suspend private fun getEvents() {
-        val response = connpassService.listEvents(1256).await()
+        eventList = arrayListOf<ConnpassEvent>()
+
+        val response = connpassService.listEvents(1256, 100).await()
         response.events.forEach { event ->
             eventList.add(event)
         }
