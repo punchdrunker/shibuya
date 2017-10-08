@@ -31,7 +31,7 @@ kapt {
 }
 
 dependencies {
-    kapt 'com.android.databinding:compiler:3.0.0-beta7'
+    kapt "com.android.databinding:compiler:$versions.gradleTools"
     kapt "com.airbnb.android:epoxy-processor:$versions.epoxy"
 
     // fundamentals
