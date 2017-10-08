@@ -4,10 +4,9 @@ import kotlinx.coroutines.experimental.runBlocking
 import okhttp3.HttpUrl
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.hamcrest.CoreMatchers.`is`
-import org.junit.After
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.gildor.coroutines.retrofit.await
@@ -16,12 +15,12 @@ class ConnmassServiceTest {
 
     private var server = MockWebServer()
 
-    @After
+    @AfterEach
     @Throws(Exception::class)
     fun tearDown() = server.shutdown()
 
     @Test
-    fun getEvents() {
+    internal fun getEvents() {
         server = MockWebServer()
 
         val response = createMockResponse()
@@ -33,15 +32,15 @@ class ConnmassServiceTest {
         val actualResponse = runBlocking {
             service.listEvents(1256, 100).await()
         }
-        Assert.assertThat(actualResponse.results_available, `is`(2))
-        Assert.assertThat(actualResponse.results_start, `is`(1))
-        Assert.assertThat(actualResponse.results_returned, `is`(2))
+        assertEquals(2, actualResponse.results_available)
+        assertEquals(1, actualResponse.results_start)
+        assertEquals(2, actualResponse.results_returned)
 
         val events = actualResponse.events
-        Assert.assertThat(events.count(), `is`(2))
-        Assert.assertThat(events[0].event_url, `is`("https://shibuya-apk.connpass.com/event/68094/"))
-        Assert.assertThat(events[0].event_id, `is`(68094))
-        Assert.assertThat(events[0].catch, `is`("\u6e0b\u8c37\u3092\u4e2d\u5fc3\u306b\u6d3b\u52d5\u3059\u308bAndroid\u30a2\u30d7\u30ea\u958b\u767a\u8005\u30b3\u30df\u30e5\u30cb\u30c6\u30a3"))
+        assertEquals(2, events.count())
+        assertEquals(68094, events[0].event_id)
+        assertEquals("https://shibuya-apk.connpass.com/event/68094/", events[0].event_url)
+        assertEquals("\u6e0b\u8c37\u3092\u4e2d\u5fc3\u306b\u6d3b\u52d5\u3059\u308bAndroid\u30a2\u30d7\u30ea\u958b\u767a\u8005\u30b3\u30df\u30e5\u30cb\u30c6\u30a3", events[0].catch)
     }
 
     private fun createMockResponse() = MockResponse()
