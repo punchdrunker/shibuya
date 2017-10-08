@@ -27,22 +27,17 @@ jobs:
           paths:
             - ~/.gradle
       - run:
-          name: Lint
-          command: ./gradlew --stacktrace lintDebug
-      - run:
           name: Test
-          command: ./gradlew --offline --stacktrace testDebug
+          command: ./gradlew --stacktrace lintDebug testDebug
+      - run:
+          name: Build
+          command: ./gradlew --offline --stacktrace assembleDebug
       - store_artifacts:
           path: app/build/reports
           destination: reports
       - store_artifacts:
           path: app/build/test-results
           destination: test-results
-      - store_test_results:
-          path: app/build/test-results
-      - run:
-          name: Build
-          command: ./gradlew --offline --stacktrace assembleDebug
       - store_artifacts:
           path: app/build/outputs/apk
           destination: apk
