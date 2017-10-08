@@ -5,12 +5,12 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
     defaultConfig {
         applicationId "tokyo.punchdrunker.shibuya"
-        minSdkVersion 26
-        targetSdkVersion 26
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -32,24 +32,20 @@ kapt {
 
 dependencies {
     kapt 'com.android.databinding:compiler:3.0.0-beta7'
-    kapt 'com.airbnb.android:epoxy-processor:2.4.0'
+    kapt "com.airbnb.android:epoxy-processor:$versions.epoxy"
 
     // fundamentals
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
+    implementation "com.android.support:appcompat-v7:$versions.supportLibrary"
+    implementation "com.android.support:design:$versions.supportLibrary"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlin"
 
     // network
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
-    testImplementation 'com.squareup.okhttp3:mockwebserver:3.9.0'
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+    implementation "com.squareup.okhttp3:okhttp:$versions.okhttp"
+
 
     // async
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19'
@@ -59,13 +55,20 @@ dependencies {
     // view
     // TODO: update epoxy when 2.5.1 or later is released
     // https://github.com/airbnb/epoxy/issues/290
-    implementation 'com.airbnb.android:epoxy:2.4.0'
-    implementation 'com.airbnb.android:epoxy-databinding:2.4.0'
+    implementation "com.airbnb.android:epoxy:$versions.epoxy"
+    implementation "com.airbnb.android:epoxy-databinding:$versions.epoxy"
 
     // debug tools
     implementation 'com.jakewharton.timber:timber:4.5.1'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
+
+    // test
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testImplementation 'junit:junit:4.12'
+    testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttp"
 }
 kotlin {
     experimental {
