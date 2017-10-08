@@ -19,7 +19,7 @@ jobs:
             - /opt/android/sdk/licenses
             - /opt/android/sdk/build-tools
             - /opt/android/sdk/extras
-       - save_cache:
+      - save_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
           paths:
             - ~/.gradle
