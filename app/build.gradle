@@ -31,7 +31,7 @@ kapt {
 }
 
 dependencies {
-    kapt 'com.android.databinding:compiler:3.0.0-beta7'
+    kapt 'com.android.databinding:compiler:3.0.0-beta6'
     kapt 'com.airbnb.android:epoxy-processor:2.4.0'
 
     // fundamentals
