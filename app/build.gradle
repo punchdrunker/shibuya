@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "de.mannodermaus.android-junit5"
 
 android {
     compileSdkVersion versions.compileSdk
@@ -15,12 +16,19 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
     dataBinding {
         enabled = true
     }
@@ -48,8 +56,8 @@ dependencies {
 
 
     // async
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19'
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
     implementation 'ru.gildor.coroutines:kotlin-coroutines-retrofit:0.7.1'
 
     // view
@@ -67,11 +75,25 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testImplementation 'junit:junit:4.12'
+    testImplementation junit5()
+    testImplementation junit5Params()
+    testCompileOnly "de.mannodermaus.gradle.plugins:android-junit5-embedded-runtime:1.0.0-RC3-rev1"
     testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttp"
 }
 kotlin {
     experimental {
         coroutines "enable"
+    }
+}
+afterEvaluate {
+    android.buildTypes.all {
+        def name = it.name
+
+        def copyTask = project.task(type: Copy, "copyKotlin${name.capitalize()}UnitTestClasses") {
+            from "build/tmp/kotlin-classes/${name}UnitTest"
+            into "build/intermediates/classes/test/$name"
+        }
+
+        project.tasks.getByName("compile${name.capitalize()}UnitTestSources").finalizedBy copyTask
     }
 }
