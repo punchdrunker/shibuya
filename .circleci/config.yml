@@ -37,7 +37,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       - run:
           name: Lint
-          command: ./gradlew --offline --stacktrace lintDebug
+          command: ./gradlew --stacktrace lintDebug
       - run:
           name: Test
           command: ./gradlew --offline --stacktrace testDebug
