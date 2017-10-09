@@ -30,6 +30,9 @@ jobs:
           name: Test
           command: ./gradlew --stacktrace lintDebug testDebug
       - run:
+          name: Check Setting
+          command: echo $DEPLOYGATE_USER_NAME; echo $DEPLOY_GATE_API_KEY;
+      - run:
           name: Deploy
           command: ./gradlew --stacktrace uploadDeployGateDebug
       - store_artifacts:
