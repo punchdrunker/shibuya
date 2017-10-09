@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "322894030077",
+    "firebase_url": "https://shibuya-f6e30.firebaseio.com",
+    "project_id": "shibuya-f6e30",
+    "storage_bucket": "shibuya-f6e30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322894030077:android:b774ec6a368f26d6",
+        "android_client_info": {
+          "package_name": "tokyo.punchdrunker.shibuya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322894030077-7rlojd1t6alamn6rj1bqoefritqvrtjd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGCvs5dKHuU-_fMJss0cTNq30ACyGl4EU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

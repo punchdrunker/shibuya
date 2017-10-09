@@ -50,6 +50,11 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$versions.kotlin"
 
+    // firebase
+    implementation "com.google.firebase:firebase-core:$versions.firebase"
+    implementation "com.google.firebase:firebase-crash:$versions.firebase"
+    implementation "com.google.firebase:firebase-messaging:$versions.firebase"
+
     // network
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit"
@@ -99,3 +104,6 @@ afterEvaluate {
         project.tasks.getByName("compile${name.capitalize()}UnitTestSources").finalizedBy copyTask
     }
 }
+
+// ADD THIS AT THE BOTTOM
+apply plugin: 'com.google.gms.google-services'
