@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: 'deploygate'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -70,6 +71,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.5.1'
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
+    implementation 'com.deploygate:sdk:4.0.0'
 
     // test
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
