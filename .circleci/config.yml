@@ -17,9 +17,6 @@ jobs:
           name: bundle install
           command: bundle install
       - run:
-          name: prepare reports
-          command: mkdir -p app/build/reports
-      - run:
           name: Danger
           command: bundle exec danger
       - run:
