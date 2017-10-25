@@ -17,6 +17,9 @@ jobs:
           name: bundle install
           command: bundle install
       - run:
+          name: Danger
+          command: bundle exec danger
+      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
