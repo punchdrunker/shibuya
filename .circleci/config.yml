@@ -17,6 +17,9 @@ jobs:
           name: bundle install
           command: bundle install
       - run:
+          name: prepare reports
+          command: mkdir -p app/build/reports
+      - run:
           name: Danger
           command: bundle exec danger
       - run:
@@ -34,7 +37,7 @@ jobs:
             - ~/.gradle
       - run:
           name: Test
-          command: ./gradlew --stacktrace lintDebug testDebug
+          command: ./gradlew --stacktrace testDebug
       - run:
           name: Deploy
           command: ./gradlew --stacktrace uploadDeployGateDebug
