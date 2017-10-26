@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/android:api-26-alpha
+      - image: punchdrunker/android-26-ruby
         environment:
           JAVA_OPTS: -Xmx1536m
           GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx1536m -XX:+HeapDumpOnOutOfMemoryError"'
@@ -13,6 +13,12 @@ jobs:
           key: sdks-licenses-build-tools-extras-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+      - run:
+          name: bundle install
+          command: bundle install
+      - run:
+          name: Danger
+          command: bundle exec danger
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
@@ -28,7 +34,7 @@ jobs:
             - ~/.gradle
       - run:
           name: Test
-          command: ./gradlew --stacktrace lintDebug testDebug
+          command: ./gradlew --stacktrace testDebug
       - run:
           name: Deploy
           command: ./gradlew --stacktrace uploadDeployGateDebug
