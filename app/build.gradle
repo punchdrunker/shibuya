@@ -64,7 +64,7 @@ dependencies {
     // async
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
-    implementation 'ru.gildor.coroutines:kotlin-coroutines-retrofit:0.7.1'
+    implementation 'ru.gildor.coroutines:kotlin-coroutines-retrofit:0.8.2'
 
     // view
     // TODO: update epoxy when 2.5.1 or later is released
@@ -101,7 +101,8 @@ afterEvaluate {
             into "build/intermediates/classes/test/$name"
         }
 
-        project.tasks.getByName("compile${name.capitalize()}UnitTestSources").finalizedBy copyTask
+        // TODO: fix later
+        //project.tasks.getByName("compile${name.capitalize()}UnitTestSources").finalizedBy copyTask
     }
 }
 
